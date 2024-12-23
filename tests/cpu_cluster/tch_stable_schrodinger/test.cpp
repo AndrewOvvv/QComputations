@@ -163,7 +163,6 @@ int main(int argc, char** argv) {
             printf("%lf ", p);
         }
     }
-    if (is_main_proc()) printf("\n");
 
     MPI_Finalize();
     return 0;
