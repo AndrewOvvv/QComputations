@@ -43,14 +43,9 @@ jobs:
                   export LD_LIBRARY_PATH=/usr/lib:$LD_LIBRARY_PATH
                   ./install.sh /usr/include /usr/lib/x86_64-linux-gnu
         
-            - name: compile test cpu_cluster_schrodinger
+            - name: run cpu_cluster tests
               shell: bash
               run: |
                   source /opt/intel/oneapi/setvars.sh
-                  mpiicpx tests/test_cpu_cluster_schrodinger.cpp -lQComputations_CPU_CLUSTER_NO_PLOTS -o main
+                  python3 tests/run_tests.py tests/cpu_cluster
 
-            - name: run test cpu_cluster_schrodinger
-              shell: bash
-              run: |
-                  source /opt/intel/oneapi/setvars.sh
-                  mpirun -n 4 ./main
