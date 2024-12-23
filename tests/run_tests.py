@@ -139,7 +139,7 @@ class QComputationsTest:
                 return False
             elif not self.equal_with_precision(completed_process.stdout, self.config.expected_result):
                 self.result = TestResult.Failed
-                print(f'Test {self.name} unexpected result error \n expected: \"{self.config.expected_result}\" \n get: \"{completed_process.stdout}\"')
+                print(f'Test {self.name} unexpected result error \n    expected: \"{self.config.expected_result}\" \n    given: \"{completed_process.stdout}\"')
                 return False
             else:
                 self.result = TestResult.Success
@@ -173,7 +173,7 @@ def run_tests():
             continue
         test = QComputationsTest(testdir.name, testdir.path)
         if not test.run():
-            return
+            os._exit(1)
 
 
 run_tests()
