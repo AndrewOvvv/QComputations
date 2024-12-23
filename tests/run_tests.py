@@ -105,7 +105,6 @@ class QComputationsTest:
                 return False
         return True
 
-
     def compile(self):
         print(f'Test {self.name} compiling...')
         completed_process = subprocess.run([
@@ -137,14 +136,19 @@ class QComputationsTest:
             if not completed_process.returncode == 0:
                 self.result = TestResult.Failed
                 print(f'Test {self.name} run-time error: \"{completed_process.stderr}\"')
+                return False
             elif not self.equal_with_precision(completed_process.stdout, self.config.expected_result):
                 self.result = TestResult.Failed
                 print(f'Test {self.name} unexpected result error \n expected: \"{self.config.expected_result}\" \n get: \"{completed_process.stdout}\"')
+                return False
             else:
                 self.result = TestResult.Success
 
             print(f'Test {self.name} on {nprocs} processes finished with {self.result} status.')
+        return True
 
+    def clear_binary(self):
+        subprocess.run(["rm", f"{self.path}/test"])
 
     def run(self):
         # run test only if it is inited, in other cases return
@@ -155,8 +159,10 @@ class QComputationsTest:
             return False
 
         if not self.validate():
+            self.clear_binary()
             return False
 
+        self.clear_binary()
         return True
 
 
